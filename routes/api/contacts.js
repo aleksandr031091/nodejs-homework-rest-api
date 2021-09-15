@@ -1,8 +1,15 @@
 const express = require("express");
 const router = express.Router();
+const contactsOperations = require("../../model/index.js");
 
 router.get("/", async (req, res, next) => {
-  res.json({ message: "template message" });
+  try {
+    const contacts = await contactsOperations.listContacts();
+
+    res.json({ contacts });
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get("/:contactId", async (req, res, next) => {
