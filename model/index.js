@@ -5,8 +5,8 @@ const contacts = require("./contacts.json");
 const filePath = path.join(__dirname, "products.json");
 const { nanoid } = require("nanoid");
 
-const updateContacts = async (newProducts) => {
-  await fs.writeFile(filePath, JSON.stringify(newProducts));
+const updateContacts = async (contacts) => {
+  await fs.writeFile(filePath, JSON.stringify(contacts));
 };
 
 const listContacts = async () => {
@@ -34,12 +34,23 @@ const removeContact = async (contactId) => {
 };
 
 const addContact = async (body) => {
-  // const id = nanoid();
-  // const newContact = { ...body, id: id };
-  // contacts.push(newContact);
+  const id = nanoid();
+  const newContact = { id, ...body };
+  contacts.push(newContact);
+  await updateContacts(contacts);
+  return newContact;
 };
 
-const updateContact = async (contactId, body) => {};
+const updateContact = async (contactId, body) => {
+  const contactIdx = contacts.findIndex((contact) => contact.id === contactId);
+
+  if (!contactIdx) {
+    return null;
+  }
+  contacts[contactIdx] = { id, ...body };
+  await updateContacts(contacts);
+  return contacts[contactIdx];
+};
 
 module.exports = {
   listContacts,
