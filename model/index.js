@@ -2,7 +2,10 @@ const fs = require("fs/promises");
 const path = require("path");
 
 const contacts = require("./contacts.json");
-const filePath = path.join(__dirname, "products.json");
+const filePath = path.join(__dirname, "contacts.json");
+
+// import { customAlphabet } from "nanoid";
+// const nanoid = customAlphabet("1234567890abcdef", 10);
 const { nanoid } = require("nanoid");
 
 const updateContacts = async (contacts) => {
