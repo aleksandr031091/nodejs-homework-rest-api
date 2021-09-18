@@ -82,7 +82,7 @@ router.put("/:contactId", async (req, res, next) => {
     const id = JSON.parse(contactId);
     const result = await contactsOperations.updateContact(id, req.boby);
     if (!result) {
-      const error = new Error(`Product with id=${contactId} not found`);
+      const error = new Error(`Contact with id=${contactId} not found`);
       error.status = 404;
       throw error;
     }
@@ -114,7 +114,7 @@ router.delete("/:contactId", async (req, res, next) => {
     res.json({
       status: "success",
       code: 200,
-      message: result,
+      message: "Contact is deleted",
     });
   } catch (error) {
     next(error);
