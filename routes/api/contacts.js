@@ -77,10 +77,10 @@ router.put("/:contactId", async (req, res, next) => {
       err.status = 400;
       throw err;
     }
-
     const { contactId } = req.params;
     const id = JSON.parse(contactId);
-    const result = await contactsOperations.updateContact(id, req.boby);
+
+    const result = await contactsOperations.updateContact(id, req.body);
     if (!result) {
       const error = new Error(`Contact with id=${contactId} not found`);
       error.status = 404;

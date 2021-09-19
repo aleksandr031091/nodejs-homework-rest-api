@@ -7,7 +7,7 @@ const filePath = path.join(__dirname, "contacts.json");
 const { customAlphabet } = require("nanoid");
 const nanoid = customAlphabet("1234567890", 10);
 
-const updateContacts = async (contacts) => {
+const updateContacts = async () => {
   await fs.writeFile(filePath, JSON.stringify(contacts));
 };
 
@@ -27,30 +27,32 @@ const getContactById = async (contactId) => {
 const addContact = async (body) => {
   const id = +nanoid();
   const newContact = { id, ...body };
+
   contacts.push(newContact);
-  await updateContacts(contacts);
+  await updateContacts();
   return newContact;
 };
 
 const removeContact = async (contactId) => {
   const contactIdx = contacts.findIndex((contact) => contact.id === contactId);
   const removeContacts = contacts[contactIdx];
-  // if (!contactIdx) {
-  //   return null;
-  // }
+
+  if (contactIdx === -1) {
+    return null;
+  }
   contacts.splice(contactIdx, 1);
-  await updateContacts(contacts);
+  await updateContacts();
   return removeContacts;
 };
 
 const updateContact = async (contactId, body) => {
   const contactIdx = contacts.findIndex((contact) => contact.id === contactId);
 
-  if (!contactIdx) {
+  if (contactIdx === -1) {
     return null;
   }
-  contacts[contactIdx] = { id, ...body };
-  await updateContacts(contacts);
+  contacts[contactIdx] = { id: contactId, ...body };
+  await updateContacts();
   return contacts[contactIdx];
 };
 
