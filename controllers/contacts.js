@@ -19,10 +19,23 @@ const getContactById = async (req, res) => {
   sendSuccessReq(res, result);
 };
 
-const addContact = async (req, res) => {};
+const addContact = async (req, res) => {
+  const result = await Contact.create(req.body);
+  sendSuccessReq(res, result, 201);
+};
 
 const upgateContactById = async (req, res) => {};
-const removeContactById = async (req, res) => {};
+
+const removeContactById = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await Contact.findByIdAndDelete(id);
+
+  if (!result) {
+    throw new NotFound(`Contact with id=${id} not found`);
+  }
+  sendSuccessReq(res, { result });
+};
 
 module.exports = {
   getAllContacts,
