@@ -49,10 +49,25 @@ const upgateContactById = async (req, res) => {
   sendSuccessReq(res, { result });
 };
 
+const upgateFavoritById = async (req, res) => {
+  const { id } = req.params;
+  const { favorite } = req.body;
+  const result = await Contact.findByIdAndUpdate(
+    id,
+    { favorite },
+    { new: true }
+  );
+  if (!result) {
+    throw new NotFound(`Contact with id=${id} not found`);
+  }
+  sendSuccessReq(res, { result });
+};
+
 module.exports = {
   getAllContacts,
   getContactById,
   addContact,
   upgateContactById,
   removeContactById,
+  upgateFavoritById,
 };

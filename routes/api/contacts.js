@@ -18,6 +18,6 @@ router.put(
 
 router.delete("/:id", controllerWraper(ctrl.removeContactById));
 
-// router.patch("/:id", controllerWraper(ctrl));
+router.patch("/:id", controllerWraper(ctrl.upgateFavoritById));
 
 module.exports = router;
