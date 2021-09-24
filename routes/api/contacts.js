@@ -10,11 +10,11 @@ router.get("/:id", controllerWraper(ctrl.getContactById));
 
 router.post("/", validation(joiSchema), controllerWraper(ctrl.addContact));
 
-// router.put(
-//   "/:id",
-//   validation(joiSchema),
-//   controllerWraper(ctrl.upgateContactById)
-// );
+router.put(
+  "/:id",
+  validation(joiSchema),
+  controllerWraper(ctrl.upgateContactById)
+);
 
 router.delete("/:id", controllerWraper(ctrl.removeContactById));
 

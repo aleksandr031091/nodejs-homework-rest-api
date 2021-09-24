@@ -21,10 +21,9 @@ const getContactById = async (req, res) => {
 
 const addContact = async (req, res) => {
   const result = await Contact.create(req.body);
+
   sendSuccessReq(res, result, 201);
 };
-
-const upgateContactById = async (req, res) => {};
 
 const removeContactById = async (req, res) => {
   const { id } = req.params;
@@ -34,6 +33,19 @@ const removeContactById = async (req, res) => {
   if (!result) {
     throw new NotFound(`Contact with id=${id} not found`);
   }
+
+  sendSuccessReq(res, { result });
+};
+
+const upgateContactById = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+
+  if (!result) {
+    throw new NotFound(`Contact with id=${id} not found`);
+  }
+
   sendSuccessReq(res, { result });
 };
 
