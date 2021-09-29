@@ -1,7 +1,7 @@
-const sendSuccessReq = (res, data, status = 200) => {
-  res.status(status).json({
-    status: "success",
-    code: status,
+const sendSuccessReq = (res, data, code = 200, status = "succes") => {
+  res.status(code).json({
+    status,
+    code,
     data,
   });
 };
