@@ -6,7 +6,7 @@ const { auth: ctrl } = require("../../controllers");
 
 router.post("/signup", validation(joiSchema), controllerWraper(ctrl.signup));
 
-// router.post("/login", validation(joiSchema), controllerWraper(ctrl.login));
+router.post("/login", validation(joiSchema), controllerWraper(ctrl.login));
 
 // router.get("/logout", validation(joiSchema), controllerWraper(ctrl.logout));
 
