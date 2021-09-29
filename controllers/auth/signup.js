@@ -1,8 +1,10 @@
+// const bcrypt = require("bcryptjs");
+
 const { User } = require("../../model");
 const { sendSuccessReq } = require("../../helpers");
 
 const signup = async (req, res) => {
-  const { email } = req.body;
+  const { email, password } = req.body;
 
   const result = await User.findOne({ email });
 
@@ -15,7 +17,11 @@ const signup = async (req, res) => {
     return;
   }
 
-  await User.create(req.body);
+  const newUser = new User({ email });
+
+  newUser.setPassword(password);
+
+  await newUser.save();
 
   sendSuccessReq(res, {
     code: 201,
