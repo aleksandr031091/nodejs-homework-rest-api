@@ -11,7 +11,7 @@ const getContactById = async (req, res) => {
     throw new NotFound(`Contact with id=${id} not found`);
   }
 
-  sendSuccessReq(res, result);
+  sendSuccessReq({ res, data: { result } });
 };
 
 module.exports = getContactById;

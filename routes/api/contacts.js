@@ -12,7 +12,12 @@ router.get("/", authenticate, controllerWraper(ctrl.getAllContacts));
 
 router.get("/:id", controllerWraper(ctrl.getContactById));
 
-router.post("/", validation(joiSchema), controllerWraper(ctrl.addContact));
+router.post(
+  "/",
+  authenticate,
+  validation(joiSchema),
+  controllerWraper(ctrl.addContact)
+);
 
 router.put(
   "/:id",

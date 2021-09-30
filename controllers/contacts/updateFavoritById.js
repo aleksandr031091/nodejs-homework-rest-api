@@ -13,7 +13,7 @@ const upgateFavoritById = async (req, res) => {
   if (!result) {
     throw new NotFound(`Contact with id=${id} not found`);
   }
-  sendSuccessReq(res, { result });
+  sendSuccessReq({ res, data: { result } });
 };
 
 module.exports = upgateFavoritById;
