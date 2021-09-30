@@ -10,7 +10,7 @@ const { contacts: ctrl } = require("../../controllers");
 
 router.get("/", authenticate, controllerWraper(ctrl.getAllContacts));
 
-router.get("/:id", controllerWraper(ctrl.getContactById));
+router.get("/:id", authenticate, controllerWraper(ctrl.getContactById));
 
 router.post(
   "/",
@@ -21,12 +21,13 @@ router.post(
 
 router.put(
   "/:id",
+  authenticate,
   validation(joiSchema),
   controllerWraper(ctrl.upgateContactById)
 );
 
-router.delete("/:id", controllerWraper(ctrl.removeContactById));
+router.delete("/:id", authenticate, controllerWraper(ctrl.removeContactById));
 
-router.patch("/:id", controllerWraper(ctrl.upgateFavoritById));
+router.patch("/:id", authenticate, controllerWraper(ctrl.upgateFavoritById));
 
 module.exports = router;

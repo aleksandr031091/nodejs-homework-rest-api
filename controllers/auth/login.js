@@ -18,6 +18,8 @@ const login = async (req, res) => {
 
   const token = user.createToken();
 
+  await User.findByIdAndUpdate(user._id, { token });
+
   res.json({
     code: 200,
     status: "success",

@@ -1,20 +1,24 @@
+const { User } = require("../model");
 const jwt = require("jsonwebtoken");
 
-const { User } = require("../model");
+const sendSuccessReq = require("../helpers");
 
 const { SECRET_KEY } = process.env;
 
 const authenticate = async (req, res, next) => {
   const { authorization } = req.headers;
-
   const [bearer, token] = authorization.split(" ");
 
-  if (bearer !== "Bearer") {
+  const errorAuthorized = () => {
     return res.status(401).json({
       status: "error",
       code: 401,
       message: "Not authorized",
     });
+  };
+
+  if (bearer !== "Bearer") {
+    return errorAuthorized();
   }
 
   try {
@@ -22,23 +26,14 @@ const authenticate = async (req, res, next) => {
 
     const user = await User.findById(id);
 
-    console.log(user);
-    // if (!user.token) {
-    //   return res.status(401).json({
-    //     status: "error",
-    //     code: 401,
-    //     message: "Not authorized",
-    //   });
-    // }
+    if (!user.token) {
+      return errorAuthorized();
+    }
 
     req.user = user;
     next();
   } catch (error) {
-    return res.status(401).json({
-      status: "error",
-      code: 401,
-      message: "Not authorized",
-    });
+    return errorAuthorized();
   }
 };
 
