@@ -3,6 +3,8 @@ const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const { SECRET_KEY } = process.env;
+
 const userSchema = Schema(
   {
     password: {
@@ -34,8 +36,6 @@ userSchema.methods.setPassword = function (password) {
 userSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
-
-const { SECRET_KEY } = process.env;
 
 userSchema.methods.createToken = function () {
   const payload = {
