@@ -17,6 +17,7 @@ const login = async (req, res) => {
   }
 
   const token = user.createToken();
+
   res.json({
     code: 200,
     status: "success",
