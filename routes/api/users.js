@@ -10,4 +10,6 @@ router.patch(
   controllerWraper(ctrl.updateAvatar)
 );
 
+router.get("/verify/:verificationToken", controllerWraper(ctrl.verify));
+
 module.exports = router;

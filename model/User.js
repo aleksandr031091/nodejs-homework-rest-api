@@ -2,6 +2,7 @@ const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { nanoid } = require("nanoid");
 
 const { SECRET_KEY } = process.env;
 
@@ -25,6 +26,14 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verifyToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
     avatarURL: String,
   },
   { versionKey: false, timestamps: true }
@@ -32,6 +41,10 @@ const userSchema = Schema(
 
 userSchema.methods.setPassword = function (password) {
   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+};
+
+userSchema.methods.setVerifyToken = function () {
+  this.verifyToken = nanoid();
 };
 
 userSchema.methods.comparePassword = function (password) {
