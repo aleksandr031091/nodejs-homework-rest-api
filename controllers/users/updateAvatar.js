@@ -38,7 +38,7 @@ const updateAvatar = async (req, res) => {
     });
   } catch (error) {
     await fs.unlink(tempStorage);
-    throw new NotFound(`Contact with id=? not found`);
+    throw new NotFound(`Contact with id=${_id} not found`);
   }
 };
 
