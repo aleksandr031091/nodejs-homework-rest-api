@@ -1,5 +1,5 @@
 const { User } = require("../../model");
-const { sendSuccessReq } = require("../../helpers");
+const { sendSuccessReq, sendEmail } = require("../../helpers");
 const gravatar = require("gravatar");
 
 const signup = async (req, res) => {
@@ -20,14 +20,23 @@ const signup = async (req, res) => {
   const newUser = new User({ email });
 
   newUser.setPassword(password);
+  newUser.setVerifyToken();
   newUser.createDefaultAvatar(gravatar.url(newUser.email, { s: "200" }));
 
-  await newUser.save();
+  const { verifyToken } = await newUser.save();
+
+  const data = {
+    to: email,
+    subject: "Подтверджение email",
+    html: `<a href="http://localhost:3000/api/v1/users/verify/${verifyToken}"target="_blank">Подтвердить регистрацию</a>`,
+  };
+
+  await sendEmail(data);
 
   sendSuccessReq({
     res,
     code: 201,
-    data: { message: "Created" },
+    data: { message: "Created", verifyToken },
   });
 };
 

@@ -6,13 +6,14 @@ const login = async (req, res) => {
 
   const user = await User.findOne({ email });
 
-  if (!user || !user.comparePassword(password)) {
+  if (!user || !user.comparePassword(password) || !user.verify) {
     sendSuccessReq({
       res,
       code: 401,
       status: "Unauthorized",
-      message: "Email or password is wrong",
+      message: "Email or password is wrong or is not verify",
     });
+
     return;
   }
 
